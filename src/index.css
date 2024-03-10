@@ -2,7 +2,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
- 
+  overflow-x: hidden;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -16,11 +16,13 @@
   @media screen and (min-width: 320px) {
     html {
       font-size: calc(14px + 6 * ((100vw - 320px) / 680));
+      overflow-x: hidden;
     }
   }
   @media screen and (min-width: 1000px) {
     html {
       font-size: 22px;
+      
     }
   }
 

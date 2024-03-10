@@ -35,3 +35,11 @@ export const userLogin = async (credentials) => {  //funcionando
     }
     
 }
+
+export const getAllDogs = async () =>{  
+  
+    const res = await axios.get(`${API_URL}/api/dogs/dogs`)
+    console.log(res, "somos llamada")
+    return res
+    
+}

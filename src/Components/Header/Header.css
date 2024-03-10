@@ -1,3 +1,9 @@
 .btnlogin {
     background-color: #0d6efd;
+  
 }
+@media (max-width: 767px) {
+    .ml-auto.btnlogin button {
+      width: 40% !important;
+    }
+  }
