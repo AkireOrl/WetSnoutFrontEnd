@@ -40,7 +40,7 @@ function LoginPopup() {
 
         const isAdmin = decodedToken.userRoles.includes("admin");
         setTimeout(() => {
-          isAdmin ? navigate('/tatuprofile') : navigate('/profile');
+          isAdmin ? navigate('/tatuprofile') : navigate('/perfil');
         });
 
       })

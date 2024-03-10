@@ -5,13 +5,15 @@ import { persistReducer } from "redux-persist";
 import { thunk } from "redux-thunk";
 import {userSlice} from '../pages/userSlice';
 import userDetailSlice from "../pages/userDetailSlice";
+import {dogSlice} from "../pages/dogSlice";
 
 
 
 
 const reducers = combineReducers({
   user: userSlice.reducer,
-  userDetails: userDetailSlice
+  userDetails: userDetailSlice,
+  dog: dogSlice.reducer
   
 });
 

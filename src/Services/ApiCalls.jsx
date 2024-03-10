@@ -43,3 +43,25 @@ export const getAllDogs = async () =>{
     return res
     
 }
+
+ export const getProfile = async (token, id) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res = await axios.get(`${API_URL}/api/users/${id}`, config);
+  return res.data;
+};
+// export const updateUser = async (token, updateData) => {
+//   const config = {
+//       headers: {
+//           Authorization: "Bearer " + token
+//       },
+//   };
+
+//   const res = await axios.patch(`${API_URL}/api/users/`,updateData, config);
+ 
+//   return res.data;
+// }

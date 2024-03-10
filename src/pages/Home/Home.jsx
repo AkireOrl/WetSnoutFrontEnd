@@ -180,22 +180,37 @@ export const Home = () => {
           </Carousel.Item>
         </Carousel>
       </div>
+      <div className="row container-fluid">
+            {/* Primer div */}
+            <div className=" welcomeText col-md-12 center mt-5 d-flex align-items-center">
+              <div className="welcomeText col-12  text-center">
+              <div className="col-9 mx-auto">
+                <h1 className="textText">Encuentra a tu emjor amigo</h1>
+                <p className="textoInicial">En cada rincón de nuestro refugio, encontrarás corazones latiendo con amor. Nuestra visión es simple pero poderosa: construir puentes hacia un futuro donde cada cola tenga un final feliz.
+                  <br></br>
+                  Aquí, la compasión es nuestro idioma común y la empatía, nuestra guía. Nos enorgullece ofrecer refugio, cuidado y, lo más importante, esperanza a aquellos que han experimentado la adversidad.</p>
 
-      <div className="allBody mt-3">
-        <div className="container-fluid">
+              </div>
+              </div>
+            </div>
+            </div>
+      <div className="allBody mt-3 ">
+        <div className="container-fluid d-flex justify-content-center">
           <div className="row justify-content-center align-items-center">
             {dogs && dogs.length > 0 ? (
               dogs.slice(0, 3).map((dog, index) => (
-                <div className="col-md-4 mb-3 text-center" key={index}>
-                  <Card style={{ width: '18rem' }}>
+                <div className="col-md-4 col-11 mb-3 text-center" key={index}>
+                  <div className="text-center">
+                  <Card style={{ width: '19rem' }}>
                     <Card.Img variant="top" style={{ width: '10rem' }} src={dog.photo} />
                     <Card.Body>
                       <Card.Title>{dog.name}</Card.Title>
-                      <Card.Text>{dog.race}</Card.Text>
-                      <Card.Text>{dog.size}</Card.Text>
-                      <Button variant="primary">Go somewhere</Button>
+                      <Card.Text>Raza: {dog.race}</Card.Text>
+                      <Card.Text>Tamaño: {dog.size}</Card.Text>
+                      <Button variant="primary">Ver Ficha</Button>
                     </Card.Body>
                   </Card>
+                </div>
                 </div>
               ))
             ) : (
@@ -204,6 +219,7 @@ export const Home = () => {
           </div>
         </div>
       </div>
+     
 
       <div className="row container-fluid ">
         {/* Primer div */}
