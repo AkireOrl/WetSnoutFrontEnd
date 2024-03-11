@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
-import { getProfile, updateUser } from "../../Services/ApiCalls";
+import { getAppointments, getProfile, updateUser } from "../../Services/ApiCalls";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserData, userData } from "../userSlice";
 import { jwtDecode } from "jwt-decode";
@@ -16,6 +16,7 @@ export const Profile = () => {
 
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState({});
+  const [appointmentData, setAppointmentData]  = useState([])
 
   const [isEditing, setIsEditing] = useState(false);
   const token = userRdxDetail.credentials.token
@@ -26,7 +27,7 @@ export const Profile = () => {
   const dispatch = useDispatch();
   const [editableProfileData, setEditableProfileData] = useState({});
  
-console.log(profileData)
+
   useEffect(() => {
     const fetchData = async () => {
       if (!token) {
@@ -54,11 +55,14 @@ console.log(profileData)
   }, []);
 
 
-  useEffect(()=>{
-    
-  } , [profileData]);
-
-
+  useEffect(() => {
+    getAppointments(token, userId).then(
+      (res) =>  {setAppointmentData(res)}
+    )
+  } , []);
+  
+  console.log( appointmentData,"soy appo en perfil")
+  console.log(profileData, "Soy Perfil")
 
   const inputHandler = (event) => {
     setEditableProfileData((prevState) => ({

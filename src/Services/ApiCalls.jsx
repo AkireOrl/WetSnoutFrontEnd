@@ -66,3 +66,22 @@ export const updateUser = async (token, id, updateData) => {
  
   return res;
 }
+export const createAppointments = async(token,id, appointmentData) => {
+  const config ={
+      headers:{
+          Authorization: "Bearer " + token
+      }
+  }
+  const res = await axios.post(`${API_URL}/api/appointment/${id}` ,appointmentData, config )
+ return res.data;
+}
+
+export const getAppointments = async(token, id) => {
+  const config ={
+    headers:{
+        Authorization: "Bearer " + token
+    }
+}
+const res = await axios.get(`${API_URL}/api/appointment/miscitasuser/${id}`, config )
+ return res.data;
+}
