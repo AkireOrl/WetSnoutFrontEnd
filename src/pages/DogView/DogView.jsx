@@ -1,21 +1,13 @@
-import { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 export const DogView = () => {
   const { id } = useParams();
-  const dogs = useSelector(state => state.dogs);
-  
-
-  if (!dogs) {
-    return <p>Loading...</p>;
-  }
-
-  const selectedDog = dogs.find(dogs => dogs.id === parseInt(id));
-
+  const selectedDog = useSelector((state) => state.dog.selectedDog);
 
   if (!selectedDog) {
-    return <p>Perro no encontrado</p>;
+    return <p>Loading...</p>;
   }
 
   return (
@@ -26,3 +18,6 @@ export const DogView = () => {
     </div>
   );
 };
+
+
+

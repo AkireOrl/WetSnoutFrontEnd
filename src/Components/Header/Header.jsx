@@ -58,12 +58,13 @@ export const Header = () => {
 
 
 
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
-      <Container className="container-fluid r d-flex flex-row">
+      <Container className="container-fluid d-flex flex-row">
         <Navbar className="bg-body-tertiary">
           <Container>
-            <Navbar.Brand href="#home">
+            <Navbar.Brand href="/">
               <img
                 src="/WetSnout.png"
                 width="30"
@@ -79,7 +80,7 @@ export const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/"> Perretes</Nav.Link>
+            <Nav.Link href="/animales"> Perretes</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               {!token ? (
                 <>

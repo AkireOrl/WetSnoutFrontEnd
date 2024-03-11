@@ -76,7 +76,7 @@ function LoginPopup() {
           value={credentials.password}
           onChange={handleInputChange}
         />
-
+ 
         <button className="btn btn-primary btn-sm col-xs-auto" onClick={() => { handleLogin(); close(); }}>
           Entrar
         </button>

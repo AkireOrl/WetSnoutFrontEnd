@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
-import { getProfile } from "../../Services/ApiCalls";
+import { getProfile, updateUser } from "../../Services/ApiCalls";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserData, userData } from "../userSlice";
 import { jwtDecode } from "jwt-decode";
@@ -39,10 +39,11 @@ console.log(profileData)
 
         //logica para determinar que entra en el seteditableprofiledata
         setEditableProfileData({
-          username: res.profileData?.username,
-          name: res.profileData?.first_name,
-          surname: res.profileData?.last_name,
-          photo: res.profileData?.photo
+          username: res.profileUser?.username,
+          first_name: res.profileUser?.first_name,
+          last_name: res.profileUser?.last_name,
+          photo: res.profileUser?.photo,
+          phone: res.profileUser?.phone
           
         });
         
@@ -77,24 +78,30 @@ console.log(profileData)
     if (editableProfileData) {
       // Actualizar el perfil del usuario en la base de datos
       const updatedData = {
-        name: editableProfileData.name,
+        first_name: editableProfileData.first_name,
         username: editableProfileData.username,
-        surname: editableProfileData.surname,
+        email: editableProfileData.email,
+        last_name: editableProfileData.last_name,
         photo: editableProfileData.photo,
+        phone:  editableProfileData.phone,
       };
      
   
       if (token) {
         try {
-        //   updateUser(token, updatedData);
+          const id = decodedToken.userId;
+
+          updateUser(token, id, updatedData);
           setProfileData((prevState) => ({
             ...prevState,
             profileUser: {
               ...prevState.profileUser,
-              name: updatedData.name,
+              first_name: updatedData.first_name,
               username: updatedData.username,
-              surname: updatedData.surname,
+              email: updatedData.email,
+              last_name: updatedData.last_name,
               photo: updatedData.photo,
+              phone: updatedData.phone,
             },
           }));
           setIsEditing(false);
@@ -110,11 +117,16 @@ console.log(profileData)
   };
   return (
     <>
-    <h1>{profileData.username}</h1>
+   
       <div className="profileDesign">
         <div className="userInfo">
-          <img src={profileData.profileUser?.photo}></img>
-          <h1 className="">{profileData.profileUser?.username}</h1>
+          <img style={{width: '10rem'}} src={profileData.photo}></img>
+          <h1 className="">{profileData.username}</h1>
+          <h3 className="">{profileData.email}</h3>
+          <h3 className="">{profileData.first_name}</h3>
+          <h3 className="">{profileData.last_name}</h3>
+          <h3 className="">{profileData.phone}</h3>
+          <h3 className="">{profileData.city}</h3>
           <button onClick={() => buttonHandler()}>
             {isEditing ? "Ocultar edición" : "Editar perfil"}
           </button>
@@ -123,18 +135,18 @@ console.log(profileData)
           {isEditing ? (
             <>
               <CustomForm
-                name="name"
+                name="first_name"
                 type="text"
                 handler={inputHandler}
-                value={editableProfileData.name}
+                value={editableProfileData.first_name}
                 placeholder="Nombre"
                
               ></CustomForm>
               <CustomForm
-                name="surname"
+                name="last_name"
                 type="text"
                 handler={inputHandler}
-                value={editableProfileData.surname}
+                value={editableProfileData.last_name}
                 placeholder="Apellido"
               ></CustomForm>
                 <CustomForm
@@ -151,6 +163,13 @@ console.log(profileData)
                 value={editableProfileData.photo}
                 placeholder="Cambia tu foto"
               ></CustomForm>
+               <CustomForm
+                name="phone"
+                type="text"
+                handler={inputHandler}
+                value={editableProfileData?.phone}
+                placeholder="Cambia tu numero"
+              ></CustomForm>
             </>
           ) : null}
         </div>
@@ -159,9 +178,9 @@ console.log(profileData)
           <button onClick={saveChanges}>Guardar cambios</button>
         ) : null}
 
-        <h2>{profileData.profileUser?.name}</h2>
+        {/* <h2>{profileData.name}</h2>
         <h2>{profileData.profileUser?.surname}</h2>
-        <p>{profileData.profileUser?.email}</p>
+        <p>{profileData.profileUser?.email}</p> */}
 
 
 

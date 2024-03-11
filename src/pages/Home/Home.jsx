@@ -62,7 +62,7 @@ export const Home = () => {
             }
             dispatch(login({ credentials: data }))
             setTimeout(() => {
-              navigate('/profile')
+              navigate('/perfil')
             });
 
           })

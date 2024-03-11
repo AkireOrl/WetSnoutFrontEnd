@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {dogSlice} from "../dogSlice";
+import {dogSlice,setSelectedDog} from "../dogSlice";
+import './Dogs.css';
 
 export const Dogs = () => {
   const dispatch = useDispatch();
@@ -28,11 +29,13 @@ export const Dogs = () => {
   useEffect(() => {
     if (selectedDogId !== null) {
       if (dogs && dogs.length > 0) {
-        const selectedDog = dogs.find(dog => dog.id === selectedDogId);
+        const selectedDog = dogs.find(dog => dog.id === parseInt(selectedDogId, 10));
 
         if (selectedDog) {
+          dispatch(setSelectedDog(selectedDog));
           navigate(`/animales/${selectedDogId}`);
           console.log(selectedDogId);
+          // dispatch(selectedDogId);
         } else {
           console.error("Perro no encontrado en el estado de Redux.");
           // Puedes manejar el caso en el que el perro no se encuentre en el estado de Redux
@@ -42,16 +45,16 @@ export const Dogs = () => {
         // Puedes manejar el caso en el que el estado de Redux sea undefined
       }
     }
-  }, [selectedDogId, navigate, dogs]);
+  }, [selectedDogId]);
 
   console.log(dogs, "somos perros");
 
   return (
     <>
       <div className="top">
-        <div className="banner mb-5">
+        <div className="banner-dog mb-5">
           <div className="HomeBody col-12 ">
-            <h1 className="titol">WetSnout</h1>
+            <h1 className="titol">Nuestros Peludos</h1>
 
           </div>
         </div>

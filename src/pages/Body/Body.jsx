@@ -2,7 +2,7 @@ import {Navigate, Route, Routes} from "react-router-dom"
 import { Home } from "../Home/Home";
 import { Login } from "../Login/Login";
 import { Dogs } from "../Dogs/Dogs";
-import { DogView } from "../DogView/DogView";
+import {DogView} from '../DogView/DogView.jsx';
 import { Profile } from "../Profile/Profile";
 
 
