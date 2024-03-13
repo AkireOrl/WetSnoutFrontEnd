@@ -111,3 +111,13 @@ export const getAllAppointments = async(token) => {
 const res = await axios.get(`${API_URL}/api/appointment/`, config )
  return res.data;
 }
+
+export const getAllUsersWithRoles = async(token, page=1)=>{
+  const config ={
+    headers:{
+        Authorization: "Bearer " + token
+    }
+}
+const res = await axios.get(`${API_URL}/api/users/todos?page=${page}`, config )
+ return res.data;
+}

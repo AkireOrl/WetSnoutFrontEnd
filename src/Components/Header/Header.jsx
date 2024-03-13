@@ -96,7 +96,8 @@ export const Header = () => {
               </> 
               ): decoded.userRoles[0] === "super_admin" ?  (
                 <>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                <NavDropdown.Item href="/perfil">Perfil SuperAdmin</NavDropdown.Item>
+              <NavDropdown.Item href="/panelsuperusers">SuperUsers</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={() => logMeOut()}>Log out</NavDropdown.Item>
               </> 

@@ -66,10 +66,12 @@ export const DogView = () => {
 
   return (
     <>
-      <div>
-        <h2>{selectedDog.name}</h2>
-        <p>Raza: {selectedDog.race}</p>
+      <div className="container-fluid ">
+        <div className="col-12 text-center">
+        <h2>Conoce a {selectedDog.name}</h2>
+        
         {/* Otros detalles del perro */}
+      </div>
       </div>
       <div className="col-12  mb-3 text-center" key={id}>
         <div className="text-center">
