@@ -19,7 +19,7 @@ export const DogView = () => {
   const handleReserveClick = () => {
     setShowForm(true);
   };
-
+  const userRol = userRdxDetail.credentials.userData?.userRoles[0];
 
 
   if (!selectedDog) {
@@ -29,6 +29,7 @@ export const DogView = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let decodeToken = jwtDecode(token);
+    console.log(decodeToken.userId)
 
 
     const activityId = 1;
@@ -42,13 +43,24 @@ export const DogView = () => {
     };
 
     try {
+
       await createAppointments(token, appointmentData);
       navigate("/perfil");
     } catch (error) {
       console.error("Error creating appointment: ", error);
     }
   };
+  const isLoggedIn = () => {
+    if (token) {
+      try {
+        let decodeToken = jwtDecode(token);
 
+        return decodeToken;
+      } catch (error) {
+        console.error('No estas registrado');
+      }
+    }
+  }
 
 
 
@@ -70,40 +82,40 @@ export const DogView = () => {
               <Card.Text>Sociable: {selectedDog.sociable}</Card.Text>
               {/* <Button variant="primary"onClick={handleReserveClick}>Reservar Paseo</Button> */}
               <Popup
-    trigger={<button className="bg-primary btn-lg text-light rounded rounded-3">Reservar Cita</button>}
-    modal // Habilitar modal para oscurecer el fondo
-    nested // Anidado para centrar el contenido
-    closeButton 
-  >
-    {(close) => (
-      <div className="customForm">
-        <button  className="btn bg-primary close btn-sm text-light" onClick={close}>
-        <span>&times;</span>
-        </button>
-        <form onSubmit={handleSubmit} className="appointmentForm">
-          <label htmlFor="date"></label>
-          <input className="inputsAppo" type="date" id="date" name="date" min={new Date()} required />
+                trigger={isLoggedIn() && userRol === "user" && <button className="bg-primary btn-lg text-light rounded rounded-3" onClick={() => handleSubmit}>Reservar Cita</button>}
+                modal // Habilitar modal para oscurecer el fondo
+                nested // Anidado para centrar el contenido
+                closeButton
+              >
+                {(close) => (
+                  <div className="customForm">
+                    <button className="btn bg-primary close btn-sm text-light" onClick={close}>
+                      <span>&times;</span>
+                    </button>
+                    <form onSubmit={handleSubmit} className="appointmentForm">
+                      <label htmlFor="date"></label>
+                      <input className="inputsAppo" type="date" id="date" name="date" min={new Date()} required />
 
-          <label htmlFor="time"></label>
-          <input className="inputsAppo" type="time" id="time" name="time" required />
+                      <label htmlFor="time"></label>
+                      <input className="inputsAppo" type="time" id="time" name="time" required />
 
-          <button type="submit" className="mybutton">
-            Enviar
-          </button>
-        </form>
-      
-      </div>
-    )}
-  </Popup>
+                      <button type="submit" className="mybutton">
+                        Enviar
+                      </button>
+                    </form>
+
+                  </div>
+                )}
+              </Popup>
             </Card.Body>
           </Card>
-      
-   
-    </div>
-    </div>
+
+
+        </div>
+      </div>
     </>
   );
-  }
+}
 
 
 

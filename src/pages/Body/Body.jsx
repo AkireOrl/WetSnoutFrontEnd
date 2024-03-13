@@ -4,6 +4,8 @@ import { Login } from "../Login/Login";
 import { Dogs } from "../Dogs/Dogs";
 import {DogView} from '../DogView/DogView.jsx';
 import { Profile } from "../Profile/Profile";
+//import { AdminProfile } from "../AdminProfile/AdminProfile.jsx";
+import { AdminAppointments } from "../AdminAppointments/AdminAppointments.jsx";
 
 
 export const Body = () => {
@@ -18,6 +20,7 @@ export const Body = () => {
            <Route path="/animales" element={<Dogs/>} />
            <Route path="/animales/:id" element={<DogView/>} />
            <Route path="/perfil" element={<Profile/>} />
+           <Route path="/citasadmin" element={<AdminAppointments/>} />
 
            </Routes>
     

@@ -1,7 +1,4 @@
-
-
 import { useEffect, useState } from "react";
-// import "./Login.css";
 import { CustomForm } from "../../Components/CustomForm/CustomForm";
 import { userLogin } from "../../Services/ApiCalls";
 import { jwtDecode } from "jwt-decode";
@@ -11,18 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 export const Login = () => {
 
+    const userRdxData = useSelector(userData)
     const [credentials, setCredentials] = useState({
         email: "",
         password: "",
     });
 
-    // instancio redux en modo escritura
-    const dispatch = useDispatch()
 
-    // instancio redux en modo lectura
-    const userRdxData = useSelector(userData)
-
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
 
     const inputHandler = (event) => {
         setCredentials((prevState) => ({

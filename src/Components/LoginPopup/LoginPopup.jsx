@@ -1,13 +1,14 @@
 import { useState}  from 'react';
 import Popup from 'reactjs-popup';
-import { useDispatch } from 'react-redux';  // Importing useDispatch
+import { useDispatch } from 'react-redux'; 
 import { login } from '../../pages/userSlice';
 import { userLogin } from '../../Services/ApiCalls';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 function LoginPopup() {
-  const dispatch = useDispatch();  // Initializing useDispatch
+  const navigate = useNavigate();
+  const dispatch = useDispatch();  
 
   const [credentials, setCredentials] = useState({
     email: "",
@@ -21,7 +22,7 @@ function LoginPopup() {
     }));
   };
    
-  const navigate = useNavigate();
+  
   const handleLogin = () => {
     userLogin(credentials)
       .then((token) => {
@@ -29,8 +30,8 @@ function LoginPopup() {
           navigate("/login");
           return null;
         }
+        
         const decodedToken = jwtDecode(token);
-
         const data = {
           token: token,
           userData: decodedToken,

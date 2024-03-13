@@ -54,6 +54,7 @@ export const getAllDogs = async () =>{
   const res = await axios.get(`${API_URL}/api/users/${id}`, config);
   return res.data;
 };
+
 export const updateUser = async (token, id, updateData) => {
   const config = {
       headers: {
@@ -63,16 +64,16 @@ export const updateUser = async (token, id, updateData) => {
   };
 
   const res = await axios.patch(`${API_URL}/api/users/${id}`,updateData, config);
- 
   return res;
 }
-export const createAppointments = async(token,id, appointmentData) => {
+
+export const createAppointments = async( token, appointmentData) => {
   const config ={
       headers:{
           Authorization: "Bearer " + token
       }
   }
-  const res = await axios.post(`${API_URL}/api/appointment/${id}` ,appointmentData, config )
+  const res = await axios.post(`${API_URL}/api/appointment/` ,appointmentData, config )
  return res.data;
 }
 
@@ -83,5 +84,30 @@ export const getAppointments = async(token, id) => {
     }
 }
 const res = await axios.get(`${API_URL}/api/appointment/miscitasuser/${id}`, config )
+ return res.data;
+}
+
+
+export const updateAppoState = async(token,id, newState) => {
+  const config ={
+    headers:{
+        Authorization: "Bearer " + token
+    }
+  }
+  console.log(`Updating appointment with ID ${id} to state ${newState}`); // Add this line to print a message to the console
+  const res = await axios.patch(`${API_URL}/api/appointment/appostate/${id}`,{ "is_active": newState }, config )
+  console.log(res, "esto es res")
+  return res.data;
+}
+
+// router.patch("/appostate/:id",auth, appointmentController.updateAppointmentActive);
+
+export const getAllAppointments = async(token) => {
+  const config ={
+    headers:{
+        Authorization: "Bearer " + token
+    }
+}
+const res = await axios.get(`${API_URL}/api/appointment/`, config )
  return res.data;
 }

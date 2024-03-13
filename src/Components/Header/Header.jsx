@@ -13,9 +13,9 @@ import { logout, userData } from '../../pages/userSlice';
 export const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+
   const userRdxData = useSelector(userData);
-
-
   const token = userRdxData.credentials.token
   const decoded = userRdxData.credentials.userData
 
@@ -49,6 +49,7 @@ export const Header = () => {
       .catch((err) => console.error("Ha ocurrido un error", err))
   };
 
+
   const logMeOut = () => {
     dispatch(logout({ credentials: { token: null, userData: null}}));
   
@@ -81,26 +82,34 @@ export const Header = () => {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/animales"> Perretes</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+            <NavDropdown title="Mi cuenta" id="basic-nav-dropdown">
               {!token ? (
                 <>
-              <NavDropdown.Item href="#action/3.1">Nologuii</NavDropdown.Item>
+             <NavDropdown.Item href="/#FormHome">Resgistrarse</NavDropdown.Item>
               </>
               ): decoded.userRoles[0] === "admin" ? (
                 <>
-              <NavDropdown.Item href="/perfil">ConLoguinn</NavDropdown.Item>
-              </>
+              <NavDropdown.Item href="/perfil">Perfil Admin</NavDropdown.Item>
+              <NavDropdown.Item href="/citasadmin">Citas Admin</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={() => logMeOut()}>Log out</NavDropdown.Item>
+              </> 
               ): decoded.userRoles[0] === "super_admin" ?  (
                 <>
               <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={() => logMeOut()}>Log out</NavDropdown.Item>
               </> 
+              
               ): (
                 <>
                 <NavDropdown.Item href="/perfil">Soy User</NavDropdown.Item>
-                </> 
-              )}
+                
+            
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={() => logMeOut()}>Log out</NavDropdown.Item>
+              </> 
+              )}
             </NavDropdown>
           </Nav>
           <Nav className="ml-auto btnlogin ">

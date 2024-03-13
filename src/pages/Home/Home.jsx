@@ -16,11 +16,18 @@ import { jwtDecode } from 'jwt-decode';
 
 export const Home = () => {
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  const userRdxData = useSelector(userData);
+  const [dogs, setDogs] = useState([]);
   const [registerData, setRegisterData] = useState({
     username: "",
     email: "",
     password: "",
   });
+
+
   const inputHandler = (event) => {
     setRegisterData((prevState) => ({
       ...prevState,
@@ -29,15 +36,6 @@ export const Home = () => {
     console.log(event.target.value);
   };
 
-  const dispatch = useDispatch();
-  const userRdxData = useSelector(userData);
-  const navigate = useNavigate();
-
-
-  //   useEffect (() => {
-  //    console.log(registerData);
-
-  // }, [registerData])
 
   const buttonHandler = () => {
     //definimos las credenciales para el futuro login con los datos de registro
@@ -69,8 +67,7 @@ export const Home = () => {
           .catch((err) => console.error("Ha ocurrido un error", err))
       });
   }
-  const [dogs, setDogs] = useState([]);
-
+  
   useEffect(() => {
     if (dogs.length === 0) {
       getAllDogs().then((res) => {
