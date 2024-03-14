@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import "./Home.css"
 import { CustomForm } from '../../Components/CustomForm/CustomForm';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, userData } from '../userSlice';
 import { getAllDogs, userLogin, userRegister } from '../../Services/ApiCalls';
@@ -18,6 +18,9 @@ export const Home = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+
   
   const userRdxData = useSelector(userData);
   const [dogs, setDogs] = useState([]);
@@ -27,6 +30,15 @@ export const Home = () => {
     password: "",
   });
 
+///////////////////////////Investigar location para navegar entre hash
+// console.log(location, "soy location")
+//   useEffect(() =>{
+//     if (location.hash === "#FormHome") {
+      
+      
+//     }
+  
+//   })
 
   const inputHandler = (event) => {
     setRegisterData((prevState) => ({
@@ -171,7 +183,7 @@ export const Home = () => {
             <Carousel.Caption>
               <h5 className="carousel-titol">Energía y diversión sin límites</h5>
               <p>
-                Vibrantes, juguetones y llenos de vitalidad, estos perros encarnan la alegría de vivir. Sumérgete en su mundo lleno de energía positiva y contágiate de su entusiasmo contagioso.
+                Vibrantes, juguetones y llenos de vitalidad, estos perros encarnan la alegría de vivir. Sumérgete en su mundo lleno de energía positiva y contágiate de su entusiasmo.
               </p>
             </Carousel.Caption>
           </Carousel.Item>

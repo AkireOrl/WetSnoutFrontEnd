@@ -17,45 +17,59 @@ export const AdminAppointments = () => {
 
   const userRdxDetail = useSelector(userData)
   const token = userRdxDetail.credentials.token
-  const decodedToken = jwtDecode(token)
-  const userId = decodedToken.userId;
+  console.log(token)
+  
+
 
   //const [profileData, setProfileData] = useState({});
   //const [editableProfileData, setEditableProfileData] = useState({});
   const [appointmentData, setAppointmentData] = useState({});
+  const [editableAppointmentAdmin, setEditableAppointmentAdmin] = useState();
   // const [isEditing, setIsEditing] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
 
+
   useEffect(() => {
+    
     const fetchData = async () => {
-      try {
+      try{
+      if(!token){
+        navigate('/'), { state: { message: "Please log in to access this page" }}
+      }else {
         const res = await getAllAppointments(token);
         setAppointmentData(res);
         console.log(res)
+      }
       } catch (error) {
         console.error('Error fetching appointments:', error);
       }
     };
 
     fetchData();
-  }, [token]);
+  }, []);
+  // const decodedToken = jwtDecode(token)
+  // const userId = decodedToken.userId;
 
 
+  //refactorizar con then/catch
   const handleUpdateState = async (appointmentId, newState) => {
     try {
       if (appointmentId) {
         const response = await updateAppoState(token, appointmentId, newState);
-
-        if (response.data) {
+        console.log(response, "ahora si debe salir"); 
+        if (response) {
 
           console.log('Estado actualizado con éxito');
+          console.log(response, "soy tressss")
           // Uctualización del estado de la cita
           setAppointmentData(prevState => {
             return prevState.map(appointmentData => {
-              if (appointmentData.appointmentData.id === appointmentId) {
+              console.log(appointmentData, "soy el segundo")
+              if (appointmentData.id === appointmentId) {
+                console.log(appointmentData, "Soy appo en funcion con Demian")
                 return { ...appointmentData, is_active: newState };
               } else {
                 return appointmentData;
@@ -80,8 +94,8 @@ export const AdminAppointments = () => {
       const newState = !appointment.is_active
       console.log(`Updating appointment with ID ${appointment.id} to state ${newState}`);
       handleUpdateState(appointment.id, newState);
-      // handleUpdateState(appointment.filter((appointment) => appointment.id !== id));
-      window.location.reload();
+      
+     
     } else {
       console.error('ID de la cita indefinido');
     }
