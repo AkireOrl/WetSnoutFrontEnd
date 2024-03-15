@@ -20,12 +20,21 @@ export const Profile = () => {
   const userId = decodedToken.userId;
 
 
-  const [profileData, setProfileData] = useState({});
+  const [profileData, setProfileData] = useState({
+    profileUser: { // Inicializar profileUser aquí
+      first_name: '',
+      username: '',
+      email: '',
+      last_name: '',
+      photo: '',
+      phone: '',
+    },
+  });
   const [appointmentData, setAppointmentData] = useState([])
   const [editableProfileData, setEditableProfileData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-  const [deleteAppointmentId, setDeleteAppointmentId] = useState(null);
- 
+
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,6 +49,7 @@ export const Profile = () => {
         const id = decodedToken.userId;
         console.log(id, "soy id aquí");
         const res = await getProfile(token, id);
+
         setProfileData(res);
 
         // lógica para determinar qué entra en seteditableprofiledata
@@ -60,7 +70,7 @@ export const Profile = () => {
   //   getAppointments(token, userId).then((res) => {
   //     setAppointmentData(res);
   //   });
-    
+
   // },[]);
   useEffect(() => {
     const fetchData = async () => {
@@ -71,17 +81,11 @@ export const Profile = () => {
         console.error('Error fetching appointments:', error);
       }
     };
-  
+
     fetchData();
   }, [token, userId]);
 
-  // useEffect(() => {
-  //   getAppointments(token, userId).then(
-  //     (res) => { setAppointmentData(res) }
 
-  //   )
-
-  // }, []);
 
   console.log(appointmentData, "soy appo en perfil")
   console.log(profileData, "Soy Perfil")
@@ -142,7 +146,54 @@ export const Profile = () => {
     }
   };
 
-  const saveChanges = async () => {
+  // const saveChanges = async () => {
+  //   if (editableProfileData) {
+  //     // Actualizar el perfil del usuario en la base de datos
+  //     const updatedData = {
+  //       first_name: editableProfileData.first_name,
+  //       username: editableProfileData.username,
+  //       email: editableProfileData.email,
+  //       last_name: editableProfileData.last_name,
+  //       photo: editableProfileData.photo,
+  //       phone: editableProfileData.phone,
+  //     };
+
+
+  //     if (token) {
+  //       try {
+  //         const id = decodedToken.userId;
+  //         console.log("Antes de llamar a updateUser");
+  //         updateUser(token, id, updatedData);
+  //         console.log("Después de llamar a updateUser");
+  //         setProfileData((prevState) => ({
+  //           ...prevState,
+  //           profileUser: {
+  //             ...prevState.profileUser,
+
+  //             first_name: updatedData.first_name,
+  //             username: updatedData.username,
+  //             email: updatedData.email,
+  //             last_name: updatedData.last_name,
+  //             photo: updatedData.photo,
+  //             phone: updatedData.phone,
+  //           },
+
+  //         }));
+  //         console.log( profileData,"Después de setProfileData");
+  //         setIsEditing(false);
+
+
+  //       } catch (error) {
+  //         console.error("Error al actualizar el usuario: ", error.response);
+  //       }
+  //     } else {
+  //       console.error("algo falla en función de guardar");
+  //     }
+  //   } else {
+  //     console.error("userData is undefined");
+  //   }
+  // };
+  const saveChanges = () => {
     if (editableProfileData) {
       // Actualizar el perfil del usuario en la base de datos
       const updatedData = {
@@ -154,28 +205,28 @@ export const Profile = () => {
         phone: editableProfileData.phone,
       };
 
-
       if (token) {
-        try {
-          const id = decodedToken.userId;
+        const id = decodedToken.userId;
+        console.log("Antes de llamar a updateUser");
+        updateUser(token, id, updatedData)
+          .then(() => {
 
-          updateUser(token, id, updatedData);
-          setProfileData((prevState) => ({
-            ...prevState,
-            profileUser: {
-              ...prevState.profileUser,
-              first_name: updatedData.first_name,
-              username: updatedData.username,
-              email: updatedData.email,
-              last_name: updatedData.last_name,
-              photo: updatedData.photo,
-              phone: updatedData.phone,
-            },
-          }));
-          setIsEditing(false);
-        } catch (error) {
-          console.error("Error al actualizar el usuario: ", error.response);
-        }
+            console.log("Después de llamar a updateUser");
+            setProfileData((prevState) => ({
+              ...prevState,
+              profileUser: {
+                ...prevState.profileUser,
+                ...updatedData,
+              },
+            }));
+            console.log("Datos actualizados en profileData:", profileData);
+            setIsEditing(false);
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.error("Error al actualizar el usuario: ", error.response);
+          });
+
       } else {
         console.error("algo falla en función de guardar");
       }
@@ -188,75 +239,130 @@ export const Profile = () => {
   return (
     <>
 
-      <div className="profileDesign">
-        <div className="userInfo">
-          <img style={{ width: '10rem' }} src={profileData.photo}></img>
-          <h1 className="">{profileData.username}</h1>
-          <h3 className="">{profileData.email}</h3>
-          <h3 className="">{profileData.first_name}</h3>
-          <h3 className="">{profileData.last_name}</h3>
-          <h3 className="">{profileData.phone}</h3>
-          <h3 className="">{profileData.city}</h3>
-          <button onClick={() => buttonHandler()}>
-            {isEditing ? "Ocultar edición" : "Editar perfil"}
-          </button>
+      <div className="profileDesign text-center">
+        <div className="userInfo container-fluid">
+          <div className=" justify-content-center">
+          {/* Columna para la imagen y el nombre de usuario */}
+      <div className="col-md-12 d-flex flex-column justify-content-center">
+        <div className="userProfileData ">
+          <div className="row align-items-center">
+            <div className="col-4">
+              <img style={{ width: '5rem', paddingTop: '1em' }} src={profileData.photo} alt="Profile" />
+            </div>
+            <div className="col-8 d-flex align-items-center">
+              <h1 className="userName">{profileData.username}</h1>
+            </div>
+          </div>
+                  <div className="d-flex flex-column justify-content-center">
+                <div className="d-flex align-items-center justify-content-center">
+                  <p className="labelData me-2">Email: </p>
+                  <p className="userData">{profileData.email}</p>
+                </div>
+                <div className="d-flex align-items-center justify-content-center">
+                  <p className="labelData me-2">Nombre: </p>
+                  <p className="userData">{profileData.first_name}</p>
+                </div>
+                <div className="d-flex align-items-center justify-content-center">
+                  <p className="labelData me-2">Apellido: </p>
+                  <p className="userData">{profileData.last_name}</p>
+                </div>
+                <div className="d-flex align-items-center justify-content-center">
+                  <p className="labelData me-2">Teléfono: </p>
+                  <p className="userData me-2">{profileData.phone}</p>
+                </div>
+                <div className="d-flex align-items-center justify-content-center text-align">
+                  <p className="labelData me-2">Ciudad: </p>
+                  <p className="userData">{profileData.city}</p>
+                </div>
+              </div>
+              </div>
+              <div className="updateUserInfo mb-3">
+                <button className="bg-primary btn-lg text-light rounded rounded-3 mb-2" onClick={() => buttonHandler()}>
+                  {isEditing ? "Ocultar edición" : "Editar perfil"}
+                </button>
+              </div>
+              {/* Formulario de edición */}
+              {isEditing && (
+                <div className="updateData">
+                  <div className="row">
+                    <div className="col mb-2">
+                      <CustomForm
+                        name="first_name"
+                        type="text"
+                        handler={inputHandler}
+                        value={editableProfileData.first_name}
+                        placeholder="Nombre"
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col mb-2">
+                      <CustomForm
+                        name="last_name"
+                        type="text"
+                        handler={inputHandler}
+                        value={editableProfileData.last_name}
+                        placeholder="Apellido"
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col mb-2">
+                      <CustomForm
+                        name="email"
+                        type="email"
+                        handler={inputHandler}
+                        value={editableProfileData.email}
+                        placeholder="email"
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col mb-2">
+                      <CustomForm
+                        name="photo"
+                        type="text"
+                        handler={inputHandler}
+                        value={editableProfileData.photo}
+                        placeholder="Cambia tu foto"
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col mb-2">
+                      <CustomForm
+                        name="phone"
+                        type="text"
+                        handler={inputHandler}
+                        value={editableProfileData?.phone}
+                        placeholder="Cambia tu numero"
+                      />
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <button className="bg-primary btn-lg text-light rounded rounded-3 mb-2" onClick={saveChanges}>Guardar cambios</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-        <div className="updateData">
-          {isEditing ? (
-            <>
-              <CustomForm
-                name="first_name"
-                type="text"
-                handler={inputHandler}
-                value={editableProfileData.first_name}
-                placeholder="Nombre"
+      </div>
 
-              ></CustomForm>
-              <CustomForm
-                name="last_name"
-                type="text"
-                handler={inputHandler}
-                value={editableProfileData.last_name}
-                placeholder="Apellido"
-              ></CustomForm>
-              <CustomForm
-                name="email"
-                type="email"
-                handler={inputHandler}
-                value={editableProfileData.email}
-                placeholder="email"
-              ></CustomForm>
-              <CustomForm
-                name="photo"
-                type="text"
-                handler={inputHandler}
-                value={editableProfileData.photo}
-                placeholder="Cambia tu foto"
-              ></CustomForm>
-              <CustomForm
-                name="phone"
-                type="text"
-                handler={inputHandler}
-                value={editableProfileData?.phone}
-                placeholder="Cambia tu numero"
-              ></CustomForm>
-            </>
-          ) : null}
-        </div>
+      <div className="text-center mt-4">
+        <h2>Tus paseos solicitados:</h2>
+      </div>
 
-        {isEditing ? (
-          <button onClick={saveChanges}>Guardar cambios</button>
-        ) : null}
-
-        <div className="col-md-5 align-self-end mt-5 mb-5">
+      <div className="container-fluid justify-content-center">
+        <div className="row mb-3 justify-content-center">
           {appointmentData.appointments && appointmentData.appointments
             .filter(appointment => appointment.is_active)
             .map((appointment, appointmentIndex) => (
-              <div className="textContainer container-fluid" key={appointmentIndex}>
+              <div className="col-lg-4 col-md-6 col-sm-12 mb-3" key={appointmentIndex}>
                 {/* <h2>Appointment #{appointmentIndex + 1}</h2> */}
                 {appointment.dog_profile && (
                   <Card style={{ width: '20rem' }}>
-                    <Card.Img variant="top" src={appointment.dog_profile.photo} />
+                    <Card.Img variant="top" style={{ width: '200px', height: '200px' }} src={appointment.dog_profile.photo} />
                     <Card.Body>
                       <Card.Title>{appointment.dog_profile.name}</Card.Title>
                       <Card.Text>
@@ -277,11 +383,14 @@ export const Profile = () => {
               </div>
             ))}
         </div>
-
       </div>
 
+
+
+
+
     </>
-  )
+  );
 };
 
 

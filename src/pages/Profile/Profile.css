@@ -1,0 +1,19 @@
+.userInfo {
+    border: solid 1px;
+    
+    width: 50% !important;
+    border-radius: 8px;
+}
+@media screen and (max-width: 600px) {
+    .userInfo{
+        width: 96% !important;
+    }
+}
+.userData{
+    font-size: 16px;
+}
+
+.labelData {
+    font-size: 16px;
+    color: #3c3c3c;
+}

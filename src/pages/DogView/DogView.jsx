@@ -16,6 +16,10 @@ export const DogView = () => {
   const token = userRdxDetail.credentials.token;
   const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
+
+  const today = new Date();
+  const date = today.toISOString().split('T')[0];
+
   const handleReserveClick = () => {
     setShowForm(true);
   };
@@ -65,24 +69,25 @@ export const DogView = () => {
 
 
   return (
-    <>
-      <div className="container-fluid ">
-        <div className="col-12 text-center">
+    
+  <>
+  <div className="container">
+    <div className="row justify-content-center">
+      <div className="col-12 text-center">
         <h2>Conoce a {selectedDog.name}</h2>
-        
         {/* Otros detalles del perro */}
       </div>
-      </div>
-      <div className="col-12  mb-3 text-center" key={id}>
+    </div>
+    <div className="row justify-content-center">
+      <div className="col-12 col-md-6 mb-3 text-center">
         <div className="text-center">
-          <Card >
-            <Card.Img variant="top" style={{ width: '10rem' }} src={selectedDog.photo} />
+          <Card style={{ width: '22rem' }}>
+            <Card.Img variant="top" style={{ width: '17rem' }} src={selectedDog.photo} />
             <Card.Body>
               <Card.Title>{selectedDog.name}</Card.Title>
               <Card.Text>Raza: {selectedDog.race}</Card.Text>
               <Card.Text>Tamaño: {selectedDog.size}</Card.Text>
               <Card.Text>Sociable: {selectedDog.sociable}</Card.Text>
-              {/* <Button variant="primary"onClick={handleReserveClick}>Reservar Paseo</Button> */}
               <Popup
                 trigger={isLoggedIn() && userRol === "user" && <button className="bg-primary btn-lg text-light rounded rounded-3" onClick={() => handleSubmit}>Reservar Cita</button>}
                 modal // Habilitar modal para oscurecer el fondo
@@ -96,7 +101,7 @@ export const DogView = () => {
                     </button>
                     <form onSubmit={handleSubmit} className="appointmentForm">
                       <label htmlFor="date"></label>
-                      <input className="inputsAppo" type="date" id="date" name="date" min={new Date()} required />
+                      <input className="inputsAppo" type="date" id="date" name="date" min={date} required />
 
                       <label htmlFor="time"></label>
                       <input className="inputsAppo" type="time" id="time" name="time" required />
@@ -105,17 +110,17 @@ export const DogView = () => {
                         Enviar
                       </button>
                     </form>
-
                   </div>
                 )}
               </Popup>
             </Card.Body>
           </Card>
-
-
         </div>
       </div>
-    </>
+    </div>
+  </div>
+</>
+
   );
 }
 

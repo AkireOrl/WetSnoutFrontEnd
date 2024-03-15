@@ -9,27 +9,32 @@ import './Dogs.css';
 
 export const Dogs = () => {
   const dispatch = useDispatch();
-  const dogs = useSelector(state => state.dog.dogs) || [];
+  const [dogs, setDogs ]= useSelector(state => state.dog.dogs) || [];
+  // const dogsres = useSelector([]);
   const [selectedDogId, setSelectedDogId] = useState(null);
-  const navigate = useNavigate();
+  const [perros, setPerros] = useState([]);
+    const navigate = useNavigate();
+
 
   useEffect(() => {
-    if (dogs.length === 0) {
-      getAllDogs().then((res) => {
-        dispatch(dogSlice.actions.setDogs(res.data.results));
-      });
-    }
-  }, [dispatch]);
+   
+    getAllDogs().then((res) => {
+      console.log(res.data.results, "soy res")
+      setPerros(res.data.results);
+    });
 
-  useEffect(() => {
-    console.log("Perros en el estado de Redux:", dogs);
+}, []);
+
+
+   useEffect(() => {
+    console.log("Perros en el estado de Redux:",perros);
     // Resto del código...
   }, [dogs]);
 
   useEffect(() => {
     if (selectedDogId !== null) {
-      if (dogs && dogs.length > 0) {
-        const selectedDog = dogs.find(dog => dog.id === parseInt(selectedDogId, 10));
+      if (perros && perros.length > 0) {
+        const selectedDog = perros.find(perro => perro.id === parseInt(selectedDogId, 10));
 
         if (selectedDog) {
           dispatch(setSelectedDog(selectedDog));
@@ -63,17 +68,17 @@ export const Dogs = () => {
       <div className="allBody d-flex ">
         <div className="container-fluid">
           <div className="row d-flex justify-content-center align-items-center flex-wrap">
-            {dogs && dogs.length > 0 ? (
-              dogs.map((dog, index) => {
+            {perros && perros.length > 0 ? (
+              perros.map((perro) => {
                 return (
-                  <div className="col-md-4 mb-3 d-flex" key={index}>
-                    <Card style={{ width: '18rem' }}>
-                      <Card.Img variant="top" style={{ width: '10rem' }} src={dog.photo} />
+                  <div className="col-md-4 mb-3 d-flex" key={perro.id}>
+                    <Card style={{ width: '19rem' }}>
+                      <Card.Img variant="top" style={{ width: '17rem', height: '17rem' }} src={perro.photo} />
                       <Card.Body>
-                        <Card.Title>{dog.name}</Card.Title>
-                        <Card.Text>Raza: {dog.race}</Card.Text>
-                        <Card.Text>Tamaño: {dog.size}</Card.Text>
-                        <Button variant="primary" onClick={() =>setSelectedDogId(dog.id)}
+                        <Card.Title>{perro.name}</Card.Title>
+                        <Card.Text>Raza: {perro.race}</Card.Text>
+                        <Card.Text>Tamaño: {perro.size}</Card.Text>
+                        <Button variant="primary" onClick={() =>setSelectedDogId(perro.id)}
                         >Ver Ficha</Button>
                       </Card.Body>
                     </Card>

@@ -121,3 +121,15 @@ export const getAllUsersWithRoles = async(token, page=1)=>{
 const res = await axios.get(`${API_URL}/api/users/todos?page=${page}`, config )
  return res.data;
 }
+
+export const updateUserState = async(token,id, newState) => {
+  const config ={
+    headers:{
+        Authorization: "Bearer " + token
+    }
+  }
+  console.log(`Updating user with ID ${id} to state ${newState}`); // Add this line to print a message to the console
+  const res = await axios.patch(`${API_URL}/api/users/updatestate/${id}`,{ "is_active": newState }, config )
+  console.log(res, "esto es res")
+  return res.data;
+}

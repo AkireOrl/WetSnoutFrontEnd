@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { FaPowerOff } from "react-icons/fa";
 import { BiCheckCircle } from "react-icons/bi";
-import { getAllAppointments, getProfile, updateAppoState, updateUser } from "../../Services/ApiCalls";
+import { getAllAppointments,  updateAppoState } from "../../Services/ApiCalls";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserData, userData } from "../userSlice";
 import { jwtDecode } from "jwt-decode";
-import { CustomForm } from "../../Components/CustomForm/CustomForm";
+
 import moment from "moment";
 
 //------------------------------------------------
@@ -17,16 +16,10 @@ export const AdminAppointments = () => {
 
   const userRdxDetail = useSelector(userData)
   const token = userRdxDetail.credentials.token
-  console.log(token)
-  
+  // console.log(token)
 
-
-  //const [profileData, setProfileData] = useState({});
-  //const [editableProfileData, setEditableProfileData] = useState({});
   const [appointmentData, setAppointmentData] = useState({});
-  const [editableAppointmentAdmin, setEditableAppointmentAdmin] = useState();
-  // const [isEditing, setIsEditing] = useState(false);
-
+ 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -59,12 +52,12 @@ export const AdminAppointments = () => {
     try {
       if (appointmentId) {
         const response = await updateAppoState(token, appointmentId, newState);
-        console.log(response, "ahora si debe salir"); 
+        
         if (response) {
 
           console.log('Estado actualizado con éxito');
-          console.log(response, "soy tressss")
-          // Uctualización del estado de la cita
+       
+          // Actualización del estado de la cita
           setAppointmentData(prevState => {
             return prevState.map(appointmentData => {
               console.log(appointmentData, "soy el segundo")
@@ -87,7 +80,7 @@ export const AdminAppointments = () => {
     }
   };
 
-  console.log(appointmentData);
+  
   const handleClick = (appointment) => {
     console.log(appointment);
     if (appointment && appointment.id !== undefined) {
@@ -111,7 +104,7 @@ export const AdminAppointments = () => {
   //  console.log(appointments);
   return (
     <>
-      <div>
+      <div className="text-center">
         <h2>Citas Activas</h2>
       </div>
       {/* /////////////////////////////////////////////////////////////////// */}
@@ -125,7 +118,7 @@ export const AdminAppointments = () => {
                   {/* <h2>Appointment #{appointmentIndex + 1}</h2> */}
                   {appointment.dog && (
                     <Card style={{ width: '20rem' }}>
-                      <Card.Img variant="top" src={appointment.dog.photo} />
+                      <Card.Img variant="top"  style={{ width: '300px', height: '300px' }}  src={appointment.dog.photo} />
                       <Card.Body>
                         <Card.Title>{appointment.dog.name}</Card.Title>
                         <Card.Text>
@@ -155,7 +148,7 @@ export const AdminAppointments = () => {
       )}
       {/* //////////////////////////////////////////////////////////// */}
 
-      <div>
+      <div className="text-center mt-4">
       <h2>Citas Inactivas</h2>
       </div>
       {/* /////////////////////////////////////////////////////////////////// */}
@@ -169,7 +162,7 @@ export const AdminAppointments = () => {
                   {/* <h2>Appointment #{appointmentIndex + 1}</h2> */}
                   {appointment.dog && (
                     <Card style={{ width: '20rem' }}>
-                      <Card.Img variant="top" src={appointment.dog.photo} />
+                      <Card.Img variant="top" style={{ width: '300px', height: '300px' }}  src={appointment.dog.photo} />
                       <Card.Body>
                         <Card.Title>{appointment.dog.name}</Card.Title>
                         <Card.Text>
