@@ -52,6 +52,7 @@ export const getAllDogs = async () =>{
   };
 
   const res = await axios.get(`${API_URL}/api/users/${id}`, config);
+  console.log(res.data,"perfil");
   return res.data;
 };
 
@@ -132,4 +133,14 @@ export const updateUserState = async(token,id, newState) => {
   const res = await axios.patch(`${API_URL}/api/users/updatestate/${id}`,{ "is_active": newState }, config )
   console.log(res, "esto es res")
   return res.data;
+}
+export const dogRegisterCall = async ( dogRegister , token, ) => {
+  const config ={
+    headers:{
+        Authorization: "Bearer " + token
+    }
+  }
+  const res = await axios.post(`${API_URL}/api/dogs/dogs`, dogRegister, config ) ;
+  console.log(res, "soy console en llamada de registro")
+  return res
 }

@@ -65,13 +65,13 @@ export const Dogs = () => {
         </div>
       </div>
 
-      <div className="allBody d-flex ">
+      <div className="allBody d-flex col-12 justify-content-center">
         <div className="container-fluid">
-          <div className="row d-flex justify-content-center align-items-center flex-wrap">
+          <div className="row d-flex justify-content-center align-items-center flex-wrap ">
             {perros && perros.length > 0 ? (
               perros.map((perro) => {
                 return (
-                  <div className="col-md-4 mb-3 d-flex" key={perro.id}>
+                  <div className="col-md-4 mb-3 d-flex justify-content-center" key={perro.id}>
                     <Card style={{ width: '19rem' }}>
                       <Card.Img variant="top" style={{ width: '17rem', height: '17rem' }} src={perro.photo} />
                       <Card.Body>

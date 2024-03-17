@@ -51,6 +51,7 @@ export const Profile = () => {
         const res = await getProfile(token, id);
 
         setProfileData(res);
+        console.log(res, "perfil en funcion")
 
         // lógica para determinar qué entra en seteditableprofiledata
         setEditableProfileData({
@@ -73,6 +74,10 @@ export const Profile = () => {
 
   // },[]);
   useEffect(() => {
+    if (!userId || !token) {
+      return;
+    }
+  
     const fetchData = async () => {
       try {
         const res = await getAppointments(token, userId);
@@ -81,14 +86,15 @@ export const Profile = () => {
         console.error('Error fetching appointments:', error);
       }
     };
-
+  
     fetchData();
   }, [token, userId]);
 
 
-
   console.log(appointmentData, "soy appo en perfil")
   console.log(profileData, "Soy Perfil")
+  console.log(profileData.user, "soy solo user, joder")
+  console.log(profileData.appointments, "soy solo citas, hostia")
 
   const inputHandler = (event) => {
     setEditableProfileData((prevState) => ({
@@ -146,53 +152,7 @@ export const Profile = () => {
     }
   };
 
-  // const saveChanges = async () => {
-  //   if (editableProfileData) {
-  //     // Actualizar el perfil del usuario en la base de datos
-  //     const updatedData = {
-  //       first_name: editableProfileData.first_name,
-  //       username: editableProfileData.username,
-  //       email: editableProfileData.email,
-  //       last_name: editableProfileData.last_name,
-  //       photo: editableProfileData.photo,
-  //       phone: editableProfileData.phone,
-  //     };
 
-
-  //     if (token) {
-  //       try {
-  //         const id = decodedToken.userId;
-  //         console.log("Antes de llamar a updateUser");
-  //         updateUser(token, id, updatedData);
-  //         console.log("Después de llamar a updateUser");
-  //         setProfileData((prevState) => ({
-  //           ...prevState,
-  //           profileUser: {
-  //             ...prevState.profileUser,
-
-  //             first_name: updatedData.first_name,
-  //             username: updatedData.username,
-  //             email: updatedData.email,
-  //             last_name: updatedData.last_name,
-  //             photo: updatedData.photo,
-  //             phone: updatedData.phone,
-  //           },
-
-  //         }));
-  //         console.log( profileData,"Después de setProfileData");
-  //         setIsEditing(false);
-
-
-  //       } catch (error) {
-  //         console.error("Error al actualizar el usuario: ", error.response);
-  //       }
-  //     } else {
-  //       console.error("algo falla en función de guardar");
-  //     }
-  //   } else {
-  //     console.error("userData is undefined");
-  //   }
-  // };
   const saveChanges = () => {
     if (editableProfileData) {
       // Actualizar el perfil del usuario en la base de datos
@@ -247,32 +207,32 @@ export const Profile = () => {
         <div className="userProfileData ">
           <div className="row align-items-center">
             <div className="col-4">
-              <img style={{ width: '5rem', paddingTop: '1em' }} src={profileData.photo} alt="Profile" />
+              <img style={{ width: '5rem', paddingTop: '1em' }} src={profileData.user?.photo} alt="Profile" />
             </div>
             <div className="col-8 d-flex align-items-center">
-              <h1 className="userName">{profileData.username}</h1>
+              <h1 className="userName">{profileData.user?.username}</h1>
             </div>
           </div>
                   <div className="d-flex flex-column justify-content-center">
                 <div className="d-flex align-items-center justify-content-center">
                   <p className="labelData me-2">Email: </p>
-                  <p className="userData">{profileData.email}</p>
+                  <p className="userData">{profileData.user?.email}</p>
                 </div>
                 <div className="d-flex align-items-center justify-content-center">
                   <p className="labelData me-2">Nombre: </p>
-                  <p className="userData">{profileData.first_name}</p>
+                  <p className="userData">{profileData.user?.first_name}</p>
                 </div>
                 <div className="d-flex align-items-center justify-content-center">
                   <p className="labelData me-2">Apellido: </p>
-                  <p className="userData">{profileData.last_name}</p>
+                  <p className="userData">{profileData.user?.last_name}</p>
                 </div>
                 <div className="d-flex align-items-center justify-content-center">
                   <p className="labelData me-2">Teléfono: </p>
-                  <p className="userData me-2">{profileData.phone}</p>
+                  <p className="userData me-2">{profileData.user?.phone}</p>
                 </div>
                 <div className="d-flex align-items-center justify-content-center text-align">
                   <p className="labelData me-2">Ciudad: </p>
-                  <p className="userData">{profileData.city}</p>
+                  <p className="userData">{profileData?.city}</p>
                 </div>
               </div>
               </div>
@@ -350,8 +310,12 @@ export const Profile = () => {
       </div>
 
       <div className="text-center mt-4">
-        <h2>Tus paseos solicitados:</h2>
-      </div>
+  {appointmentData.appointments && appointmentData.appointments.filter(appointment => appointment.is_active).length > 0 ? (
+    <h2>Tus Pasesos Programados:</h2>
+  ) : (
+    <p>No tienes paseos programados, ¿a qué esperas?.</p>
+  )}
+</div>
 
       <div className="container-fluid justify-content-center">
         <div className="row mb-3 justify-content-center">

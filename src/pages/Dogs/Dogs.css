@@ -11,3 +11,9 @@
     text-align: center;
     width: 100wv;
 }
+.allBody{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+}

@@ -7,6 +7,7 @@ import { Profile } from "../Profile/Profile";
 //import { AdminProfile } from "../AdminProfile/AdminProfile.jsx";
 import { AdminAppointments } from "../AdminAppointments/AdminAppointments.jsx";
 import { SuperAdminUsers } from "../SuperAdminUsers/SuperAdminUsers.jsx";
+import { DogRegister } from "../DogRegister/DogRegister.jsx";
 
 
 export const Body = () => {
@@ -23,6 +24,7 @@ export const Body = () => {
            <Route path="/perfil" element={<Profile/>} />
            <Route path="/citasadmin" element={<AdminAppointments/>} />
            <Route path="/panelsuperusers" element={<SuperAdminUsers/>} />
+           <Route path="/registrarperro" element={<DogRegister/>} />
 
            </Routes>
     

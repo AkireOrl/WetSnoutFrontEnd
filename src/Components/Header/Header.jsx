@@ -4,11 +4,11 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoginPopup from '../LoginPopup/LoginPopup';
+import RegisterPopUp from '../RegisterPopUp/RegisterPopUp';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout, userData } from '../../pages/userSlice';
-
 //-----------------------------------------------------------
 export const Header = () => {
   const navigate = useNavigate();
@@ -85,30 +85,28 @@ export const Header = () => {
             <NavDropdown title="Mi cuenta" id="basic-nav-dropdown">
               {!token ? (
                 <>
-             <NavDropdown.Item href="/#FormHome">Resgistrarse</NavDropdown.Item>
+             <NavDropdown.Item >
+              {<RegisterPopUp show={showPopup} onClose={() => setShowPopup(false)} />}
+             </NavDropdown.Item>
               </>
               ): decoded.userRoles[0] === "admin" ? (
                 <>
               <NavDropdown.Item href="/perfil">Perfil Admin</NavDropdown.Item>
               <NavDropdown.Item href="/citasadmin">Citas Admin</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={() => logMeOut()}>Log out</NavDropdown.Item>
+              <NavDropdown.Item href="/registrarperro">Registrar Perrete</NavDropdown.Item>
+             
               </> 
               ): decoded.userRoles[0] === "super_admin" ?  (
                 <>
                 <NavDropdown.Item href="/perfil">Perfil SuperAdmin</NavDropdown.Item>
               <NavDropdown.Item href="/panelsuperusers">SuperUsers</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={() => logMeOut()}>Log out</NavDropdown.Item>
+             
               </> 
               
               ): (
                 <>
                 <NavDropdown.Item href="/perfil">Soy User</NavDropdown.Item>
                 
-            
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={() => logMeOut()}>Log out</NavDropdown.Item>
               </> 
               )}
             </NavDropdown>
