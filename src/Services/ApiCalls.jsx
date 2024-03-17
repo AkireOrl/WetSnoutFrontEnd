@@ -5,7 +5,7 @@ const API_URL = "http://localhost:3000"
 
 export const userRegister = async (registerData) => {
     try {
-      console.log(registerData);
+    
       const res = await axios.post(`http://localhost:3000/api/users/register`, registerData);
       return res.data;
     } catch (error) {
@@ -39,7 +39,6 @@ export const userLogin = async (credentials) => {  //funcionando
 export const getAllDogs = async () =>{  
   
     const res = await axios.get(`${API_URL}/api/dogs/dogs`)
-    console.log(res, "somos llamada")
     return res
     
 }
@@ -52,7 +51,6 @@ export const getAllDogs = async () =>{
   };
 
   const res = await axios.get(`${API_URL}/api/users/${id}`, config);
-  console.log(res.data,"perfil");
   return res.data;
 };
 
@@ -97,7 +95,7 @@ export const updateAppoState = async(token,id, newState) => {
   }
   console.log(`Updating appointment with ID ${id} to state ${newState}`); // Add this line to print a message to the console
   const res = await axios.patch(`${API_URL}/api/appointment/appostate/${id}`,{ "is_active": newState }, config )
-  console.log(res, "esto es res")
+
   return res.data;
 }
 
@@ -131,7 +129,7 @@ export const updateUserState = async(token,id, newState) => {
   }
   console.log(`Updating user with ID ${id} to state ${newState}`); // Add this line to print a message to the console
   const res = await axios.patch(`${API_URL}/api/users/updatestate/${id}`,{ "is_active": newState }, config )
-  console.log(res, "esto es res")
+ 
   return res.data;
 }
 export const dogRegisterCall = async ( dogRegister , token, ) => {
@@ -141,6 +139,6 @@ export const dogRegisterCall = async ( dogRegister , token, ) => {
     }
   }
   const res = await axios.post(`${API_URL}/api/dogs/dogs`, dogRegister, config ) ;
-  console.log(res, "soy console en llamada de registro")
+  
   return res
 }

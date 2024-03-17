@@ -39,7 +39,7 @@ export const SuperAdminUsers = () => {
       const pageString = page.toString();
       getAllUsersWithRoles(token, pageString).then(
         (res) => {
-          console.log(res);
+         
           setUsers(res.users);
           setTotalPages(Math.ceil(res.total / 10));
           setLoading(false);
@@ -92,17 +92,7 @@ export const SuperAdminUsers = () => {
     }
   };
 
-  // const handleClick = (user) => {
-  //   console.log(user, "soy el usuario después del botón");
-  //   if (user && user.id !== undefined) {
-  //     console.log(user.id);
-  //     const newState = !user.is_active;
-  //     console.log(`Actualizando usuario con ID ${user.id} al estado ${newState}`);
-  //     handleUpdateState(user.id, newState);
-  //   } else {
-  //     console.error('ID de usuario indefinido');
-  //   }
-  // };
+
   const handleClick = async (user) => {
     try {
       const newState = !user.is_active;
@@ -121,23 +111,6 @@ export const SuperAdminUsers = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (token && userRole === "super_admin") {
-  //     // Verificamos si hay un nuevo estado antes de actualizar
-  //     if (newState !== null) {
-  //       // Actualizamos el estado de los usuarios utilizando la función handleUpdateState
-  //       setUsers(prevUsers => {
-  //         return prevUsers.map(currentUser => {
-  //           if (currentUser.id === userId) {
-  //             return { ...currentUser, is_active: newState };
-  //           } else {
-  //             return currentUser;
-  //           }
-  //         });
-  //       });
-  //     }
-  //   }
-  // }, [newState]); // Dependencia del useEffect
 
   return (
     <>

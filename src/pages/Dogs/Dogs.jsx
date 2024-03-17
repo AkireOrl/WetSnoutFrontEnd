@@ -4,13 +4,13 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {dogSlice,setSelectedDog} from "../dogSlice";
+import {setSelectedDog} from "../dogSlice";
 import './Dogs.css';
 
 export const Dogs = () => {
   const dispatch = useDispatch();
   const [dogs, setDogs ]= useSelector(state => state.dog.dogs) || [];
-  // const dogsres = useSelector([]);
+ 
   const [selectedDogId, setSelectedDogId] = useState(null);
   const [perros, setPerros] = useState([]);
     const navigate = useNavigate();
@@ -19,7 +19,7 @@ export const Dogs = () => {
   useEffect(() => {
    
     getAllDogs().then((res) => {
-      console.log(res.data.results, "soy res")
+    
       setPerros(res.data.results);
     });
 
@@ -39,20 +39,18 @@ export const Dogs = () => {
         if (selectedDog) {
           dispatch(setSelectedDog(selectedDog));
           navigate(`/animales/${selectedDogId}`);
-          console.log(selectedDogId);
-          // dispatch(selectedDogId);
+         
         } else {
           console.error("Perro no encontrado en el estado de Redux.");
-          // Puedes manejar el caso en el que el perro no se encuentre en el estado de Redux
         }
       } else {
         console.error("Estado de Redux no definido.");
-        // Puedes manejar el caso en el que el estado de Redux sea undefined
+       
       }
     }
   }, [selectedDogId]);
 
-  console.log(dogs, "somos perros");
+  
 
   return (
     <>

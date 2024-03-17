@@ -16,7 +16,7 @@ export const AdminAppointments = () => {
 
   const userRdxDetail = useSelector(userData)
   const token = userRdxDetail.credentials.token
-  // console.log(token)
+ 
 
   const [appointmentData, setAppointmentData] = useState({});
  
@@ -34,7 +34,7 @@ export const AdminAppointments = () => {
       }else {
         const res = await getAllAppointments(token);
         setAppointmentData(res);
-        console.log(res)
+       
       }
       } catch (error) {
         console.error('Error fetching appointments:', error);
@@ -60,9 +60,9 @@ export const AdminAppointments = () => {
           // Actualización del estado de la cita
           setAppointmentData(prevState => {
             return prevState.map(appointmentData => {
-              console.log(appointmentData, "soy el segundo")
+              
               if (appointmentData.id === appointmentId) {
-                console.log(appointmentData, "Soy appo en funcion con Demian")
+                
                 return { ...appointmentData, is_active: newState };
               } else {
                 return appointmentData;
@@ -82,7 +82,7 @@ export const AdminAppointments = () => {
 
   
   const handleClick = (appointment) => {
-    console.log(appointment);
+   
     if (appointment && appointment.id !== undefined) {
       const newState = !appointment.is_active
       console.log(`Updating appointment with ID ${appointment.id} to state ${newState}`);
@@ -98,10 +98,6 @@ export const AdminAppointments = () => {
 
   //////////////////////////////////AppointmentsStart///////////////////////////////
 
-
-  // console.log(appointmentData)
-  //  const appointments = appointmentData;
-  //  console.log(appointments);
   return (
     <>
       <div className="text-center">

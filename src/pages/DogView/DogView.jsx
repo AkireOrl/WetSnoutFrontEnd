@@ -33,7 +33,7 @@ export const DogView = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let decodeToken = jwtDecode(token);
-    console.log(decodeToken.userId)
+
 
 
     const activityId = 1;

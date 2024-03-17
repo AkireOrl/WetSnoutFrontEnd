@@ -22,7 +22,7 @@ function RegisterPopUp() {
       ...prevState,
       [event.target.name]: event.target.value,
     }));
-    console.log(event.target.value);
+
   };
 
   const buttonHandler = () => {

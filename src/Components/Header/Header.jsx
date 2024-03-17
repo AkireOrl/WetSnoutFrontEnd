@@ -112,9 +112,6 @@ export const Header = () => {
             </NavDropdown>
           </Nav>
           <Nav className="ml-auto btnlogin ">
-        {/* <button className="bg-primary text-light rounded rounded-3" onClick={() => setShowPopup(true)}>
-          Login
-        </button> */}
         {<LoginPopup show={showPopup} onClose={() => setShowPopup(false)} />}
       </Nav>
         </Navbar.Collapse>

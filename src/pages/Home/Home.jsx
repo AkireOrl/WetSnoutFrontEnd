@@ -30,22 +30,14 @@ export const Home = () => {
     password: "",
   });
 
-///////////////////////////Investigar location para navegar entre hash
-// console.log(location, "soy location")
-//   useEffect(() =>{
-//     if (location.hash === "#FormHome") {
-      
-      
-//     }
-  
-//   })
+
 
   const inputHandler = (event) => {
     setRegisterData((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
-    console.log(event.target.value);
+  
   };
 
 
@@ -88,7 +80,7 @@ export const Home = () => {
     }
   }, []);
 
-  console.log(dogs, "somos perros");
+ 
 
 
   return (

@@ -9,7 +9,7 @@ import { updateUserData, userData } from "../userSlice";
 import { jwtDecode } from "jwt-decode";
 import { CustomForm } from "../../Components/CustomForm/CustomForm";
 import moment from "moment";
-// import { AppointmentCard } from "../../Components/AppointmentsCard/AppointmentsCard.jsx";
+
 
 
 
@@ -47,11 +47,10 @@ export const Profile = () => {
         navigate("/register");
       } else {
         const id = decodedToken.userId;
-        console.log(id, "soy id aquí");
         const res = await getProfile(token, id);
 
         setProfileData(res);
-        console.log(res, "perfil en funcion")
+      
 
         // lógica para determinar qué entra en seteditableprofiledata
         setEditableProfileData({
@@ -67,17 +66,12 @@ export const Profile = () => {
     fetchData();
   }, [token, decodedToken.userId]);
 
-  // useEffect(() => {
-  //   getAppointments(token, userId).then((res) => {
-  //     setAppointmentData(res);
-  //   });
-
-  // },[]);
+    
   useEffect(() => {
-    if (!userId || !token) {
+    if (!userId || !token || !profileData.appointments || profileData.appointments.length === 0) {
       return;
     }
-  
+
     const fetchData = async () => {
       try {
         const res = await getAppointments(token, userId);
@@ -86,15 +80,10 @@ export const Profile = () => {
         console.error('Error fetching appointments:', error);
       }
     };
-  
+
     fetchData();
-  }, [token, userId]);
-
-
-  console.log(appointmentData, "soy appo en perfil")
-  console.log(profileData, "Soy Perfil")
-  console.log(profileData.user, "soy solo user, joder")
-  console.log(profileData.appointments, "soy solo citas, hostia")
+  }, [token, userId, profileData]);
+  
 
   const inputHandler = (event) => {
     setEditableProfileData((prevState) => ({
@@ -140,12 +129,12 @@ export const Profile = () => {
 
 
   const handleClick = (appointment) => {
-    console.log(appointment);
+ 
     if (appointment && appointment.appointment_id !== undefined) {
       const newState = !appointment.is_active
       console.log(`Updating appointment with ID ${appointment.appointment_id} to state ${newState}`);
       handleUpdateState(appointment.appointment_id, newState);
-      // handleUpdateState(appointment.filter((appointment) => appointment.id !== id));
+     
       window.location.reload();
     } else {
       console.error('ID de la cita indefinido');
@@ -167,11 +156,10 @@ export const Profile = () => {
 
       if (token) {
         const id = decodedToken.userId;
-        console.log("Antes de llamar a updateUser");
+      
         updateUser(token, id, updatedData)
           .then(() => {
 
-            console.log("Después de llamar a updateUser");
             setProfileData((prevState) => ({
               ...prevState,
               profileUser: {
@@ -323,7 +311,7 @@ export const Profile = () => {
             .filter(appointment => appointment.is_active)
             .map((appointment, appointmentIndex) => (
               <div className="col-lg-4 col-md-6 col-sm-12 mb-3" key={appointmentIndex}>
-                {/* <h2>Appointment #{appointmentIndex + 1}</h2> */}
+             
                 {appointment.dog_profile && (
                   <Card style={{ width: '20rem' }}>
                     <Card.Img variant="top" style={{ width: '200px', height: '200px' }} src={appointment.dog_profile.photo} />
@@ -355,6 +343,6 @@ export const Profile = () => {
 
     </>
   );
-};
+}
 
 

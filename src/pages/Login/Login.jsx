@@ -77,7 +77,6 @@ export const Login = () => {
                             handler={inputHandler}
                         ></CustomForm>
                         <input type="submit" name="" onClick={buttonHandler} value="Entrar"></input>
-                        {/* <h1>{userData.name}</h1> */}
                     </div>
                 </div>
 
