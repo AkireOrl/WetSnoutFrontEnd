@@ -44,7 +44,7 @@ export const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!token) {
-        navigate("/register");
+        navigate("/home");
       } else {
         const id = decodedToken.userId;
         const res = await getProfile(token, id);
