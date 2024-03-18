@@ -4,8 +4,8 @@ import Card from 'react-bootstrap/Card';
 import { FaPowerOff } from "react-icons/fa";
 import { BiCheckCircle } from "react-icons/bi";
 import { getAllAppointments,  updateAppoState } from "../../Services/ApiCalls";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUserData, userData } from "../userSlice";
+import { useSelector } from "react-redux";
+import {  userData } from "../userSlice";
 import { jwtDecode } from "jwt-decode";
 
 import moment from "moment";
@@ -17,14 +17,10 @@ export const AdminAppointments = () => {
   const userRdxDetail = useSelector(userData)
   const token = userRdxDetail.credentials.token
  
-
   const [appointmentData, setAppointmentData] = useState({});
  
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-
-
+  
   useEffect(() => {
     
     const fetchData = async () => {
@@ -43,8 +39,7 @@ export const AdminAppointments = () => {
 
     fetchData();
   }, []);
-  // const decodedToken = jwtDecode(token)
-  // const userId = decodedToken.userId;
+
 
 
   //refactorizar con then/catch

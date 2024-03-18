@@ -104,7 +104,7 @@ export const Profile = () => {
         const response = await updateAppoState(token, appointmentId, newState);
 
         if (response.data) {
-
+          //cambiar estos console por mensajes impresos en pantalla.
           console.log('Estado actualizado con éxito');
           // Uctualización del estado de la cita
           setAppointmentData(prevState => {

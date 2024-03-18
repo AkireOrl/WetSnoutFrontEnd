@@ -6,7 +6,8 @@ const API_URL = "http://localhost:3000"
 export const userRegister = async (registerData) => {
     try {
     
-      const res = await axios.post(`http://localhost:3000/api/users/register`, registerData);
+      const res = await axios.post(`${API_URL}/api/users/register`, registerData);
+
       return res.data;
     } catch (error) {
       if (error.response) {
@@ -28,6 +29,7 @@ export const userLogin = async (credentials) => {  //funcionando
     try {
         const res = await axios.post(`${API_URL}/api/users/login`, credentials, {})
         const token = res.data.token
+
         return token
     } catch (error){
         console.error('Error en el login:', error);
@@ -39,8 +41,8 @@ export const userLogin = async (credentials) => {  //funcionando
 export const getAllDogs = async () =>{  
   
     const res = await axios.get(`${API_URL}/api/dogs/dogs`)
+
     return res
-    
 }
 
  export const getProfile = async (token, id) => {
@@ -51,6 +53,7 @@ export const getAllDogs = async () =>{
   };
 
   const res = await axios.get(`${API_URL}/api/users/${id}`, config);
+
   return res.data;
 };
 
@@ -63,6 +66,7 @@ export const updateUser = async (token, id, updateData) => {
   };
 
   const res = await axios.patch(`${API_URL}/api/users/${id}`,updateData, config);
+
   return res;
 }
 
@@ -73,6 +77,7 @@ export const createAppointments = async( token, appointmentData) => {
       }
   }
   const res = await axios.post(`${API_URL}/api/appointment/` ,appointmentData, config )
+
  return res.data;
 }
 
@@ -83,6 +88,7 @@ export const getAppointments = async(token, id) => {
     }
 }
 const res = await axios.get(`${API_URL}/api/appointment/miscitasuser/${id}`, config )
+
  return res.data;
 }
 
@@ -99,8 +105,6 @@ export const updateAppoState = async(token,id, newState) => {
   return res.data;
 }
 
-// router.patch("/appostate/:id",auth, appointmentController.updateAppointmentActive);
-
 export const getAllAppointments = async(token) => {
   const config ={
     headers:{
@@ -108,6 +112,7 @@ export const getAllAppointments = async(token) => {
     }
 }
 const res = await axios.get(`${API_URL}/api/appointment/`, config )
+
  return res.data;
 }
 
@@ -118,6 +123,7 @@ export const getAllUsersWithRoles = async(token, page=1)=>{
     }
 }
 const res = await axios.get(`${API_URL}/api/users/todos?page=${page}`, config )
+
  return res.data;
 }
 
@@ -127,11 +133,11 @@ export const updateUserState = async(token,id, newState) => {
         Authorization: "Bearer " + token
     }
   }
-  console.log(`Updating user with ID ${id} to state ${newState}`); // Add this line to print a message to the console
   const res = await axios.patch(`${API_URL}/api/users/updatestate/${id}`,{ "is_active": newState }, config )
  
   return res.data;
 }
+
 export const dogRegisterCall = async ( dogRegister , token, ) => {
   const config ={
     headers:{
@@ -141,4 +147,15 @@ export const dogRegisterCall = async ( dogRegister , token, ) => {
   const res = await axios.post(`${API_URL}/api/dogs/dogs`, dogRegister, config ) ;
   
   return res
+}
+
+export const updateDogState = async (token, id, newState) => {
+  const config ={
+    headers:{
+        Authorization: "Bearer " + token
+    }
+  }
+  const res = await axios.patch(`${API_URL}/api/dogs/updatedogstate/${id}`,{ "is_active": newState }, config )
+ 
+  return res.data;
 }

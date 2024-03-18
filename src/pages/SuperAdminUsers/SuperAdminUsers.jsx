@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { userData } from "../userSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -25,10 +25,9 @@ export const SuperAdminUsers = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [totalPages, setTotalPages] = useState(0);
-  const [newState, setNewState] = useState(null);
-
+  
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
 
   useEffect(() => {
     if (!token) {
